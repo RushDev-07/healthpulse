@@ -7,7 +7,7 @@ from langchain.chains import RetrievalQA
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.llms import HuggingFacePipeline
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler  # for streaming response
-from langchain.callbacks.manager import CallbackManager
+from langchain.callbacks.manager import CallbackManager    
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
@@ -248,10 +248,12 @@ def main(device_type, show_sources, use_history, model_type, save_qa):
 
     qa = retrieval_qa_pipline(device_type, use_history, promptTemplate_type=model_type)
     # Interactive questions and answers
-    while True:
-        query = input("\nEnter a query: ")
-        if query == "exit":
-            break
+    Ques=["What is the name and the contact information of the health care agency? Answer in the following JSON format","What are all the services provided by the health care agency? Answer in the following JSON format","How many doctors,nurses and caregivers are available? Answer in the following JSON format","Give all the reviews in brief? Answer in the following JSON format"]
+    i=0
+    file=open("C:\Users\Rushabh\localGPT\output_required.txt","r")
+
+    for i in range(len(Ques)):
+        query = Ques[i]
         # Get the answer from the chain
         res = qa(query)
         answer, docs = res["result"], res["source_documents"]
